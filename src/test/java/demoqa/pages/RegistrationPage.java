@@ -1,7 +1,6 @@
 package demoqa.pages;
 
 import com.codeborne.selenide.SelenideElement;
-import com.codeborne.selenide.selector.ByText;
 import demoqa.pages.components.CalendarComponent;
 import org.openqa.selenium.Keys;
 
@@ -19,7 +18,10 @@ public class RegistrationPage {
                     subjectsInput = $("#subjectsInput"),
                     hobbiesRadio = $("#hobbiesWrapper"),
                     pictureUpload = $("#uploadPicture"),
-                    addressInput = $("#currentAddress");
+                    addressInput = $("#currentAddress"),
+                    stateSelect = $ ("#state"),
+                    citySelect = $("#city"),
+                    submit = $("#submit");
 
 
     CalendarComponent calendarComponent = new CalendarComponent();
@@ -93,8 +95,28 @@ public class RegistrationPage {
         return this;
     }
 
-    public RegistrationPage setAddress(String value){
+    public RegistrationPage setAddress(String value) {
         addressInput.setValue(value);
+
+        return this;
+    }
+
+    public RegistrationPage setState(String value) {
+        stateSelect.click();
+        stateSelect.$(byText(value)).click();
+
+        return this;
+    }
+
+    public RegistrationPage setCity(String value) {
+        citySelect.click();
+        citySelect.$(byText(value)).click();
+
+        return this;
+    }
+
+    public RegistrationPage submit() {
+        submit.click();
 
         return this;
     }
