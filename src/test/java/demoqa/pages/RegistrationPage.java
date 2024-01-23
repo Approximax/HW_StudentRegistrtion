@@ -4,6 +4,7 @@ import com.codeborne.selenide.SelenideElement;
 import demoqa.pages.components.CalendarComponent;
 import org.openqa.selenium.Keys;
 
+import static com.codeborne.selenide.Condition.text;
 import static com.codeborne.selenide.Selectors.byText;
 import static com.codeborne.selenide.Selenide.*;
 
@@ -28,6 +29,9 @@ public class RegistrationPage {
 
     public RegistrationPage openPage() {
         open("/automation-practice-form");
+        $(".practice-form-wrapper").shouldHave(text("Student Registration Form"));
+        executeJavaScript("$('#fixedban').remove()");
+        executeJavaScript("$('footer').remove()");
 
         return this;
     }
@@ -51,7 +55,7 @@ public class RegistrationPage {
     }
 
     public RegistrationPage setGender(String value) {
-        genderChoice.$(byText("value")).click();
+        genderChoice.$(byText(value)).click();
 
         return this;
     }

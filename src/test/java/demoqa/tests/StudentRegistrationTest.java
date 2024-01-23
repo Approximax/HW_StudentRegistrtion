@@ -1,19 +1,28 @@
 package demoqa.tests;
 
 import demoqa.pages.RegistrationPage;
+import demoqa.pages.components.ResultTableComponent;
 import org.junit.jupiter.api.Test;
-import org.openqa.selenium.Keys;
-
-import static com.codeborne.selenide.Condition.text;
-import static com.codeborne.selenide.Condition.visible;
-import static com.codeborne.selenide.Selectors.byText;
-import static com.codeborne.selenide.Selenide.*;
 
 
-public class StudentRegistrationTest  extends BaseTest{
+public class StudentRegistrationTest  extends TestBase {
 
+    RegistrationPage registrationPage = new RegistrationPage();
+    ResultTableComponent resultTableComponent = new ResultTableComponent();
     @Test
-    void studentRegistrationTest() {
+    void minimumDataRegistration() {
+
+        registrationPage.openPage()
+                .setFirstName("Andrew")
+                .setLastName("Doe")
+                .setGender("Male")
+                .setUserNumber("1234567891")
+                .submit();
+
+        resultTableComponent.checkAppearance()
+                .checkTableValue("Student Name", "Andrew Doe")
+                .checkTableValue("Gender", "Male")
+                .checkTableValue("Mobile", "1234567891");
 
     }
 }
