@@ -25,4 +25,16 @@ public class StudentRegistrationTest  extends TestBase {
                 .checkTableValue("Mobile", "1234567891");
 
     }
+
+    @Test
+    void negativeRegistrationTest() {
+        registrationPage.openPage()
+                .setFirstName("Peter")
+                .setLastName("")
+                .setGender("Other")
+                .setUserNumber("88005553535")
+                .submit();
+
+        resultTableComponent.checkAbsence();
+    }
 }

@@ -16,6 +16,12 @@ public class ResultTableComponent {
         return this;
     }
 
+    public ResultTableComponent checkAbsence() {
+        modalTable.shouldNotBe(visible);
+
+        return this;
+    }
+
     public ResultTableComponent checkTableValue (String key, String value) {
         tableValue.shouldHave(text(key)).shouldHave(text(value));
 
