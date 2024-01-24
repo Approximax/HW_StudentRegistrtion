@@ -37,4 +37,36 @@ public class StudentRegistrationTest  extends TestBase {
 
         resultTableComponent.checkAbsence();
     }
+
+    @Test
+    void fullDataRegistrationTest() {
+
+        registrationPage.openPage()
+                .setFirstName("Andrew")
+                .setLastName("Doe")
+                .setUserEmail("qwerty@abc.com")
+                .setGender("Other")
+                .setUserNumber("1234567891")
+                .setDateOfBirth("15", "March", "2013")
+                .setSubjects()
+                .setHobbies("Music")
+                .pictureUpload("testPicture.png")
+                .setAddress("st. Test 15")
+                .setState("NCR")
+                .setCity("Noida")
+                .submit();
+
+        resultTableComponent.checkAppearance()
+                .checkTableValue("Student Name", "Andrew Doe")
+                .checkTableValue("Student Email", "qwerty@abc.com")
+                .checkTableValue("Gender", "Other")
+                .checkTableValue("Mobile", "1234567891")
+                .checkTableValue("Date of Birth", "15 March,2013")
+                .checkTableValue("Subjects", "Accounting")
+                .checkTableValue("Hobbies", "Music")
+                .checkTableValue("Picture", "testPicture.png")
+                .checkTableValue("Address", "st. Test 15")
+                .checkTableValue("State and City", "NCR Noida");
+
+    }
 }
