@@ -10,7 +10,7 @@ public class StudentRegistrationTest  extends TestBase {
     RegistrationPage registrationPage = new RegistrationPage();
     ResultTableComponent resultTableComponent = new ResultTableComponent();
     @Test
-    void minimumDataRegistration() {
+    void minimumDataRegistrationTest() {
 
         registrationPage.openPage()
                 .setFirstName("Andrew")
