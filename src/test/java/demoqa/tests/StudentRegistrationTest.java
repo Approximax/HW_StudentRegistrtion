@@ -1,7 +1,9 @@
 package demoqa.tests;
 
+import com.github.javafaker.Faker;
 import demoqa.pages.RegistrationPage;
 import demoqa.pages.components.ResultTableComponent;
+import demoqa.utils.RandomUtils;
 import org.junit.jupiter.api.Test;
 
 
@@ -9,30 +11,40 @@ public class StudentRegistrationTest  extends TestBase {
 
     RegistrationPage registrationPage = new RegistrationPage();
     ResultTableComponent resultTableComponent = new ResultTableComponent();
+    RandomUtils randomUtils = new RandomUtils();
+
+    Faker faker = new Faker();
+
+    String firstName = faker.name().firstName();
+    String lastName = faker.name().lastName();
+    String email = faker.internet().emailAddress();
+    String gender = randomUtils.getRandomGender();
+    String phoneNumber = faker.phoneNumber().cellPhone();
+
     @Test
     void minimumDataRegistrationTest() {
 
         registrationPage.openPage()
-                .setFirstName("Andrew")
-                .setLastName("Doe")
-                .setGender("Male")
-                .setUserNumber("1234567891")
+                .setFirstName(firstName)
+                .setLastName(lastName)
+                .setGender(gender)
+                .setUserNumber(phoneNumber)
                 .submit();
 
         resultTableComponent.checkAppearance()
-                .checkTableValue("Student Name", "Andrew Doe")
-                .checkTableValue("Gender", "Male")
-                .checkTableValue("Mobile", "1234567891");
+                .checkTableValue("Student Name", firstName + " " + lastName)
+                .checkTableValue("Gender", gender)
+                .checkTableValue("Mobile", phoneNumber);
 
     }
 
     @Test
     void negativeRegistrationTest() {
         registrationPage.openPage()
-                .setFirstName("Peter")
+                .setFirstName(firstName)
                 .setLastName("")
-                .setGender("Other")
-                .setUserNumber("88005553535")
+                .setGender(gender)
+                .setUserNumber(phoneNumber)
                 .submit();
 
         resultTableComponent.checkAbsence();
@@ -42,11 +54,11 @@ public class StudentRegistrationTest  extends TestBase {
     void fullDataRegistrationTest() {
 
         registrationPage.openPage()
-                .setFirstName("Andrew")
-                .setLastName("Doe")
-                .setUserEmail("qwerty@abc.com")
-                .setGender("Other")
-                .setUserNumber("1234567891")
+                .setFirstName(firstName)
+                .setLastName(lastName)
+                .setUserEmail(email)
+                .setGender(gender)
+                .setUserNumber(phoneNumber)
                 .setDateOfBirth("15", "March", "2013")
                 .setSubjects()
                 .setHobbies("Music")
@@ -57,10 +69,10 @@ public class StudentRegistrationTest  extends TestBase {
                 .submit();
 
         resultTableComponent.checkAppearance()
-                .checkTableValue("Student Name", "Andrew Doe")
-                .checkTableValue("Student Email", "qwerty@abc.com")
-                .checkTableValue("Gender", "Other")
-                .checkTableValue("Mobile", "1234567891")
+                .checkTableValue("Student Name", firstName + " " + lastName)
+                .checkTableValue("Student Email", email)
+                .checkTableValue("Gender", gender)
+                .checkTableValue("Mobile", phoneNumber)
                 .checkTableValue("Date of Birth", "15 March,2013")
                 .checkTableValue("Subjects", "Accounting")
                 .checkTableValue("Hobbies", "Music")
