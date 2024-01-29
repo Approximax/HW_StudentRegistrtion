@@ -3,23 +3,30 @@ package demoqa.tests;
 import com.github.javafaker.Faker;
 import demoqa.pages.RegistrationPage;
 import demoqa.pages.components.ResultTableComponent;
-import demoqa.utils.RandomUtils;
 import org.junit.jupiter.api.Test;
+
+import static demoqa.utils.RandomUtils.*;
 
 
 public class StudentRegistrationTest  extends TestBase {
 
     RegistrationPage registrationPage = new RegistrationPage();
     ResultTableComponent resultTableComponent = new ResultTableComponent();
-    RandomUtils randomUtils = new RandomUtils();
 
     Faker faker = new Faker();
 
-    String firstName = faker.name().firstName();
-    String lastName = faker.name().lastName();
-    String email = faker.internet().emailAddress();
-    String gender = randomUtils.getRandomGender();
-    String phoneNumber = faker.phoneNumber().cellPhone();
+    String firstName = faker.name().firstName(),
+            lastName = faker.name().lastName(),
+            email = faker.internet().emailAddress(),
+            gender = getRandomGender(),
+            phoneNumber = faker.phoneNumber().subscriberNumber(10),
+            address = faker.address().streetAddress(),
+            state = getRandomState(),
+            city = getRandomCity(state),
+            hobby = getRandomHobby(),
+            day = getRandomDay(),
+            month = getRandomMonth(),
+            year = getRandomYear();
 
     @Test
     void minimumDataRegistrationTest() {
@@ -59,13 +66,13 @@ public class StudentRegistrationTest  extends TestBase {
                 .setUserEmail(email)
                 .setGender(gender)
                 .setUserNumber(phoneNumber)
-                .setDateOfBirth("15", "March", "2013")
+                .setDateOfBirth(day, month, year)
                 .setSubjects()
-                .setHobbies("Music")
+                .setHobbies(hobby)
                 .pictureUpload("testPicture.png")
-                .setAddress("st. Test 15")
-                .setState("NCR")
-                .setCity("Noida")
+                .setAddress(address)
+                .setState(state)
+                .setCity(city)
                 .submit();
 
         resultTableComponent.checkAppearance()
@@ -73,12 +80,12 @@ public class StudentRegistrationTest  extends TestBase {
                 .checkTableValue("Student Email", email)
                 .checkTableValue("Gender", gender)
                 .checkTableValue("Mobile", phoneNumber)
-                .checkTableValue("Date of Birth", "15 March,2013")
+                .checkTableValue("Date of Birth", day + " " + month + "," + year)
                 .checkTableValue("Subjects", "Accounting")
-                .checkTableValue("Hobbies", "Music")
+                .checkTableValue("Hobbies", hobby)
                 .checkTableValue("Picture", "testPicture.png")
-                .checkTableValue("Address", "st. Test 15")
-                .checkTableValue("State and City", "NCR Noida");
+                .checkTableValue("Address", address)
+                .checkTableValue("State and City", state + " " + city);
 
     }
 }
