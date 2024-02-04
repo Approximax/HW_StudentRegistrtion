@@ -3,9 +3,8 @@ package demoqa.tests;
 import com.github.javafaker.Faker;
 import demoqa.pages.RegistrationPage;
 import demoqa.pages.components.ResultTableComponent;
+import demoqa.utils.RandomUtils;
 import org.junit.jupiter.api.Test;
-
-import static demoqa.utils.RandomUtils.*;
 
 
 public class StudentRegistrationTest  extends TestBase {
@@ -15,18 +14,20 @@ public class StudentRegistrationTest  extends TestBase {
 
     Faker faker = new Faker();
 
+    RandomUtils randomUtils = new RandomUtils();
+
     String firstName = faker.name().firstName(),
             lastName = faker.name().lastName(),
             email = faker.internet().emailAddress(),
-            gender = getRandomGender(),
+            gender = randomUtils.getRandomGender(),
             phoneNumber = faker.phoneNumber().subscriberNumber(10),
             address = faker.address().streetAddress(),
-            state = getRandomState(),
-            city = getRandomCity(state),
-            hobby = getRandomHobby(),
-            day = getRandomDay(),
-            month = getRandomMonth(),
-            year = getRandomYear();
+            state = randomUtils.getRandomState(),
+            city = randomUtils.getRandomCity(state),
+            hobby = randomUtils.getRandomHobby(),
+            day = randomUtils.getRandomDay(),
+            month = randomUtils.getRandomMonth(),
+            year = randomUtils.getRandomYear();
 
     @Test
     void minimumDataRegistrationTest() {
