@@ -73,16 +73,8 @@ public class RegistrationPage {
         return this;
     }
 
-
-
-    /*
-    Тут мне кажется было бы правильным запихнуть все доступные в этом поле значения, который сайт дописывает за первой
-    буквой в отдельный Enam и потом с помощью switch-case сделать конструкцию перебора за пользовательским вводом. Так
-    было бы честнее, а не как сейчас жестко забитое одное единственное значение, но я не нашел в коде страницы всех
-    значений этого поля, поэтому оставил так.
-     */
-    public  RegistrationPage setSubjects() {
-        subjectsInput.setValue("a").sendKeys(Keys.ARROW_DOWN, Keys.ENTER);
+    public  RegistrationPage setSubjects(String subject) {
+        subjectsInput.setValue(subject).pressEnter();
 
         return this;
     }

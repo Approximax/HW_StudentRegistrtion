@@ -27,7 +27,8 @@ public class StudentRegistrationTest  extends TestBase {
             hobby = randomUtils.getRandomHobby(),
             day = randomUtils.getRandomDay(),
             month = randomUtils.getRandomMonth(),
-            year = randomUtils.getRandomYear();
+            year = randomUtils.getRandomYear(),
+            subject = randomUtils.getRandomSubject();
 
     @Test
     void minimumDataRegistrationTest() {
@@ -68,7 +69,7 @@ public class StudentRegistrationTest  extends TestBase {
                 .setGender(gender)
                 .setUserNumber(phoneNumber)
                 .setDateOfBirth(day, month, year)
-                .setSubjects()
+                .setSubjects(subject)
                 .setHobbies(hobby)
                 .pictureUpload("testPicture.png")
                 .setAddress(address)
@@ -82,7 +83,7 @@ public class StudentRegistrationTest  extends TestBase {
                 .checkTableValue("Gender", gender)
                 .checkTableValue("Mobile", phoneNumber)
                 .checkTableValue("Date of Birth", day + " " + month + "," + year)
-                .checkTableValue("Subjects", "Accounting")
+                .checkTableValue("Subjects", subject)
                 .checkTableValue("Hobbies", hobby)
                 .checkTableValue("Picture", "testPicture.png")
                 .checkTableValue("Address", address)

@@ -83,4 +83,14 @@ public class RandomUtils {
     public String getRandomYear() {
         return String.valueOf(faker.random().nextInt(1970, 2024));
     }
+
+    public  String getRandomSubject() {
+        return faker.options().option(
+                "Maths",
+                "Arts",
+                "Social Studies",
+                "Accounting",
+                "Biology"
+        );
+    }
 }
