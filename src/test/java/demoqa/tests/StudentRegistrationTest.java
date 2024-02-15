@@ -1,10 +1,15 @@
 package demoqa.tests;
 
+import com.codeborne.selenide.logevents.SelenideLogger;
 import com.github.javafaker.Faker;
 import demoqa.pages.RegistrationPage;
 import demoqa.pages.components.ResultTableComponent;
 import demoqa.utils.RandomUtils;
+import io.qameta.allure.selenide.AllureSelenide;
+import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
+
+import static io.qameta.allure.Allure.step;
 
 
 public class StudentRegistrationTest  extends TestBase {
@@ -31,23 +36,26 @@ public class StudentRegistrationTest  extends TestBase {
             subject = randomUtils.getRandomSubject();
 
     @Test
+    @Tag("minimumTest")
     void minimumDataRegistrationTest() {
+        SelenideLogger.addListener("allure", new AllureSelenide());
 
-        registrationPage.openPage()
-                .setFirstName(firstName)
+        step("Открываем сайт c проверяемой формой", () -> registrationPage.openPage());
+
+        step("Устанавливаем тестовые данные студента", () -> registrationPage.setFirstName(firstName)
                 .setLastName(lastName)
                 .setGender(gender)
                 .setUserNumber(phoneNumber)
-                .submit();
+                .submit());
 
-        resultTableComponent.checkAppearance()
+        step("Проверяем корректность заполненных данных студента после регистрации в форме", () -> resultTableComponent.checkAppearance()
                 .checkTableValue("Student Name", firstName + " " + lastName)
                 .checkTableValue("Gender", gender)
-                .checkTableValue("Mobile", phoneNumber);
-
+                .checkTableValue("Mobile", phoneNumber));
     }
 
     @Test
+    @Tag("negativeTest")
     void negativeRegistrationTest() {
         registrationPage.openPage()
                 .setFirstName(firstName)
@@ -60,6 +68,7 @@ public class StudentRegistrationTest  extends TestBase {
     }
 
     @Test
+    @Tag("fullTest")
     void fullDataRegistrationTest() {
 
         registrationPage.openPage()
