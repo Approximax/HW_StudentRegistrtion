@@ -2,7 +2,6 @@ package demoqa.pages;
 
 import com.codeborne.selenide.SelenideElement;
 import demoqa.pages.components.CalendarComponent;
-import org.openqa.selenium.Keys;
 
 import static com.codeborne.selenide.Condition.text;
 import static com.codeborne.selenide.Selectors.byText;
@@ -22,7 +21,8 @@ public class RegistrationPage {
                     addressInput = $("#currentAddress"),
                     stateSelect = $ ("#state"),
                     citySelect = $("#city"),
-                    submit = $("#submit");
+                    submit = $("#submit"),
+                    banner = $(".fc-consent-root");
 
 
     CalendarComponent calendarComponent = new CalendarComponent();
@@ -113,6 +113,14 @@ public class RegistrationPage {
 
     public RegistrationPage submit() {
         submit.click();
+
+        return this;
+    }
+
+    public RegistrationPage bannerRemove() {
+        if (banner.isDisplayed()) {
+            banner.$(byText("Consent")).click();
+        }
 
         return this;
     }

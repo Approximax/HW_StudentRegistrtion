@@ -1,7 +1,6 @@
 package demoqa.tests;
 
 import com.codeborne.selenide.Configuration;
-import com.codeborne.selenide.SelenideElement;
 import com.codeborne.selenide.logevents.SelenideLogger;
 import com.github.javafaker.Faker;
 import demoqa.pages.RegistrationPage;
@@ -16,8 +15,6 @@ import org.openqa.selenium.remote.DesiredCapabilities;
 
 import java.util.Map;
 
-import static com.codeborne.selenide.Selectors.byText;
-import static com.codeborne.selenide.Selenide.$;
 import static io.qameta.allure.Allure.step;
 
 
@@ -63,14 +60,6 @@ public class StudentRegistrationTest {
         SelenideLogger.addListener("AllureSelenide", new AllureSelenide());
     }
 
-    @BeforeEach
-    void beforeEach() {
-        SelenideElement banner = $(".fc-consent-root");
-        if (banner.isDisplayed()) {
-            banner.$(byText("Consent")).click();
-        }
-    }
-
     @AfterEach
     void addAttachments() {
         Attach.screenshotAs("Last screenshot");
@@ -87,6 +76,10 @@ public class StudentRegistrationTest {
     void minimumDataRegistrationTest() {
 
         step("Открываем сайт c проверяемой формой", () -> registrationPage.openPage());
+
+        step("Убираем баннер, если он есть", () -> {
+            registrationPage.bannerRemove();
+        });
 
         step("Устанавливаем минимально необходимые для регистрации тестовые данные студента", () -> registrationPage.setFirstName(firstName)
                 .setLastName(lastName)
@@ -108,6 +101,10 @@ public class StudentRegistrationTest {
 
         step("Открываем сайт c проверяемой формой", () -> registrationPage.openPage());
 
+        step("Убираем баннер, если он есть", () -> {
+            registrationPage.bannerRemove();
+        });
+
         step("Некорректно заполняем форму регистрации тестовыми данными", () ->registrationPage.setFirstName(firstName)
                         .setLastName("")
                         .setGender(gender)
@@ -125,6 +122,10 @@ public class StudentRegistrationTest {
     void fullDataRegistrationTest() {
 
         step("Открываем сайт c проверяемой формой", () -> registrationPage.openPage());
+
+        step("Убираем баннер, если он есть", () -> {
+            registrationPage.bannerRemove();
+        });
 
         step("Заполнение формы регистрации полным набором данных", () -> registrationPage.setFirstName(firstName)
                 .setLastName(lastName)
