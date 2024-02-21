@@ -1,11 +1,13 @@
 package demoqa.tests;
 
 import com.github.javafaker.Faker;
+import demoqa.config.ProjectConfig;
 import demoqa.pages.RegistrationPage;
 import demoqa.pages.components.ResultTableComponent;
 import demoqa.utils.RandomUtils;
 import io.qameta.allure.Severity;
 import io.qameta.allure.SeverityLevel;
+import org.aeonbits.owner.ConfigFactory;
 import org.junit.jupiter.api.*;
 
 import static io.qameta.allure.Allure.step;
@@ -20,8 +22,10 @@ public class StudentRegistrationTest extends TestBase{
 
     RandomUtils randomUtils = new RandomUtils();
 
-    String firstName = faker.name().firstName(),
-            lastName = faker.name().lastName(),
+    ProjectConfig projectConfig = ConfigFactory.create(ProjectConfig.class);
+
+    String firstName = projectConfig.firstName(),
+            lastName = projectConfig.lastName(),
             email = faker.internet().emailAddress(),
             gender = randomUtils.getRandomGender(),
             phoneNumber = faker.phoneNumber().subscriberNumber(10),

@@ -35,6 +35,8 @@ public class TestBase {
         Configuration.browserCapabilities = capabilities;
 
         SelenideLogger.addListener("AllureSelenide", new AllureSelenide());
+
+        System.setProperty("environment", System.getProperty("environment", "stage"));
     }
 
     @AfterEach
