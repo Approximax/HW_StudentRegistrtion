@@ -1,27 +1,17 @@
 package demoqa.tests;
 
-import com.codeborne.selenide.Configuration;
-import com.codeborne.selenide.logevents.SelenideLogger;
 import com.github.javafaker.Faker;
-import demoqa.config.DriverConfig;
-import demoqa.config.WebLinks;
 import demoqa.pages.RegistrationPage;
 import demoqa.pages.components.ResultTableComponent;
-import demoqa.utils.Attach;
 import demoqa.utils.RandomUtils;
 import io.qameta.allure.Severity;
 import io.qameta.allure.SeverityLevel;
-import io.qameta.allure.selenide.AllureSelenide;
-import org.aeonbits.owner.ConfigFactory;
 import org.junit.jupiter.api.*;
-import org.openqa.selenium.remote.DesiredCapabilities;
-
-import java.util.Map;
 
 import static io.qameta.allure.Allure.step;
 
 
-public class StudentRegistrationTest {
+public class StudentRegistrationTest extends TestBase{
 
     RegistrationPage registrationPage = new RegistrationPage();
     ResultTableComponent resultTableComponent = new ResultTableComponent();
@@ -43,38 +33,6 @@ public class StudentRegistrationTest {
             month = randomUtils.getRandomMonth(),
             year = randomUtils.getRandomYear(),
             subject = randomUtils.getRandomSubject();
-
-    @BeforeAll
-    static void beforeAll() {
-
-        DriverConfig driverConfig = ConfigFactory.create(DriverConfig.class);
-        WebLinks webLinks = ConfigFactory.create(WebLinks.class);
-
-        Configuration.baseUrl = webLinks.baseUrl();
-        Configuration.browserSize = driverConfig.browserSize();
-        Configuration.browser = driverConfig.browserName();
-        Configuration.timeout = 10000;
-//        Configuration.holdBrowserOpen = true;
-        Configuration.remote = webLinks.selenoidUrl();
-
-        DesiredCapabilities capabilities = new DesiredCapabilities();
-        capabilities.setCapability("selenoid:options", Map.<String, Object>of(
-                "enableVNC", true,
-                "enableVideo", true
-        ));
-        Configuration.browserCapabilities = capabilities;
-
-        SelenideLogger.addListener("AllureSelenide", new AllureSelenide());
-    }
-
-    @AfterEach
-    void addAttachments() {
-        Attach.screenshotAs("Last screenshot");
-        Attach.pageSource();
-        Attach.browserConsoleLogs();
-        Attach.addVideo();
-
-    }
 
     @Test
     @Tag("minimumTest")
