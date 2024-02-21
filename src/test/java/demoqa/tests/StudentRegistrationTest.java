@@ -3,6 +3,8 @@ package demoqa.tests;
 import com.codeborne.selenide.Configuration;
 import com.codeborne.selenide.logevents.SelenideLogger;
 import com.github.javafaker.Faker;
+import demoqa.config.DriverConfig;
+import demoqa.config.WebLinks;
 import demoqa.pages.RegistrationPage;
 import demoqa.pages.components.ResultTableComponent;
 import demoqa.utils.Attach;
@@ -10,6 +12,7 @@ import demoqa.utils.RandomUtils;
 import io.qameta.allure.Severity;
 import io.qameta.allure.SeverityLevel;
 import io.qameta.allure.selenide.AllureSelenide;
+import org.aeonbits.owner.ConfigFactory;
 import org.junit.jupiter.api.*;
 import org.openqa.selenium.remote.DesiredCapabilities;
 
@@ -43,12 +46,16 @@ public class StudentRegistrationTest {
 
     @BeforeAll
     static void beforeAll() {
-        Configuration.baseUrl = "https://demoqa.com";
-        Configuration.browserSize = "1920x1080";
-//        Configuration.browser = "chrome";
+
+        DriverConfig driverConfig = ConfigFactory.create(DriverConfig.class);
+        WebLinks webLinks = ConfigFactory.create(WebLinks.class);
+
+        Configuration.baseUrl = webLinks.baseUrl();
+        Configuration.browserSize = driverConfig.browserSize();
+        Configuration.browser = driverConfig.browserName();
         Configuration.timeout = 10000;
 //        Configuration.holdBrowserOpen = true;
-        Configuration.remote = "https://user1:1234@selenoid.autotests.cloud/wd/hub";
+        Configuration.remote = webLinks.selenoidUrl();
 
         DesiredCapabilities capabilities = new DesiredCapabilities();
         capabilities.setCapability("selenoid:options", Map.<String, Object>of(
@@ -135,7 +142,7 @@ public class StudentRegistrationTest {
                 .setDateOfBirth(day, month, year)
                 .setSubjects(subject)
                 .setHobbies(hobby)
-                .pictureUpload("testPicture.png")
+                .pictureUpload("img/testPicture.png")
                 .setAddress(address)
                 .setState(state)
                 .setCity(city)
@@ -149,7 +156,7 @@ public class StudentRegistrationTest {
                 .checkTableValue("Date of Birth", day + " " + month + "," + year)
                 .checkTableValue("Subjects", subject)
                 .checkTableValue("Hobbies", hobby)
-                .checkTableValue("Picture", "testPicture.png")
+                .checkTableValue("Picture", "img/testPicture.png")
                 .checkTableValue("Address", address)
                 .checkTableValue("State and City", state + " " + city));
     }
