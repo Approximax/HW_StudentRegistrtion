@@ -8,6 +8,7 @@ import io.qameta.allure.selenide.AllureSelenide;
 import org.aeonbits.owner.ConfigFactory;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
 import org.openqa.selenium.remote.DesiredCapabilities;
 
 import java.util.Map;
@@ -24,7 +25,6 @@ public class TestBase {
         Configuration.browserSize = driverConfig.browserSize();
         Configuration.browser = driverConfig.browserName();
         Configuration.timeout = 10000;
-//        Configuration.holdBrowserOpen = true;
         Configuration.remote = webLinks.selenoidUrl();
 
         DesiredCapabilities capabilities = new DesiredCapabilities();
@@ -34,9 +34,12 @@ public class TestBase {
         ));
         Configuration.browserCapabilities = capabilities;
 
-        SelenideLogger.addListener("AllureSelenide", new AllureSelenide());
-
         System.setProperty("environment", System.getProperty("environment", "stage"));
+    }
+
+    @BeforeEach
+    void beforeEach() {
+        SelenideLogger.addListener("AllureSelenide", new AllureSelenide());
     }
 
     @AfterEach

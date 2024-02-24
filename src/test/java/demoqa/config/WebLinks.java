@@ -6,8 +6,10 @@ import org.aeonbits.owner.Config;
 public interface WebLinks extends Config {
 
     @Key("base.url")
+    @DefaultValue("https://demoqa.com/")
     String baseUrl();
 
     @Key("selenoid.url")
+    @DefaultValue("https://selenoid.autotests.cloud/#/")
     String selenoidUrl();
 }
